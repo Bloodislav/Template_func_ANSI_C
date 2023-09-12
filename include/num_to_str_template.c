@@ -7,9 +7,9 @@
 
 #define issigned(num)         \
   _Generic(num, unsigned      \
-           : "unsig", unsigned long  \
-           : "unsig", unsigned long long  \
-           : "unsig", default \
+           : "unsigned", unsigned long  \
+           : "unsigned", unsigned long long  \
+           : "unsigned", default \
            : "signed")
 #ifdef T
 
@@ -20,13 +20,14 @@ int TEMPLATE(num_to_str, T)(T num, char* dest, int prec) {
   long double rounded = 0, div = 0;
   size_t negative = 0;
   
-  // union TEMPLATE(abs, T) elem;
-  // elem.data = num;
+  union TEMPLATE(abs, T) arg;
+  arg.data = num;
 
-  // if (strcmp(issigned(num), "signed") == 0) {
-  //   negative = elem.znac.negative & 1;
-  //   num *= (1 - 2 * negative);
-  // }
+  if (strcmp(issigned(num), "signed") == 0) {
+    negative = arg.field.negative;
+    
+    if (arg.field.negative != 0) num *= -1;
+  }
 
   if (strcmp(typename(num), "double") == 0) {
     div = modfl(num, &rounded);
@@ -44,7 +45,7 @@ int TEMPLATE(num_to_str, T)(T num, char* dest, int prec) {
   char* temp = malloc(sizeof(char) * strlen);
 
   if (temp) {
-    // if (negative) *(temp) = '-';
+    if (negative) *(temp) = '-';
     *(temp + negative + rank) = '.' * (prec != 0);
 
     for (size_t rank_cp = rank; rank_cp; num /= 10)
