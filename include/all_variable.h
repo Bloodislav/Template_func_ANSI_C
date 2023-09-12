@@ -1,7 +1,7 @@
 #ifndef ALL_POSSIBLE_VARS_H_
 #define ALL_POSSIBLE_VARS_H_
 
-#include <endian.h>  
+#include <endian.h>
 
 #define CAT(X, Y) X##_##Y
 #define TEMPLATE(X, Y) CAT(X, Y)
@@ -21,12 +21,12 @@ union TEMPLATE(abs, T) {
   struct {
 #if __BYTE_ORDER == __BIG_ENDIAN
     unsigned int negative : 1;
-    unsigned int other : 31;
-#endif /* Big endian.  */
+    unsigned int other : (8 * sizeof(T) - 1);
+#endif 
 #if __BYTE_ORDER == __LITTLE_ENDIAN
-    unsigned int other : 31;
+    unsigned int other : (8 * sizeof(T) - 1);
     unsigned int negative : 1;
-#endif /* Little endian.  */
+#endif 
   } field;
 };
 
@@ -40,12 +40,12 @@ union TEMPLATE(abs, T) {
   struct {
 #if __BYTE_ORDER == __BIG_ENDIAN
     unsigned int negative : 1;
-    unsigned long int other : 63;
-#endif /* Big endian.  */
+    unsigned long int other : (8 * sizeof(T) - 1);
+#endif 
 #if __BYTE_ORDER == __LITTLE_ENDIAN
-    unsigned long int other : 63;
+    unsigned long int other : (8 * sizeof(T) - 1);
     unsigned int negative : 1;
-#endif /* Little endian.  */
+#endif 
   } field;
 };
 
@@ -59,12 +59,12 @@ union TEMPLATE(abs, T) {
   struct {
 #if __BYTE_ORDER == __BIG_ENDIAN
     unsigned int negative : 1;
-    unsigned long int other : 63;
-#endif /* Big endian.  */
+    unsigned long int other : (8 * sizeof(T) - 1);
+#endif 
 #if __BYTE_ORDER == __LITTLE_ENDIAN
-    unsigned long int other : 63;
+    unsigned long int other : (8 * sizeof(T) - 1);
     unsigned int negative : 1;
-#endif /* Little endian.  */
+#endif 
   } field;
 };
 
@@ -78,12 +78,12 @@ union TEMPLATE(abs, T) {
   struct {
 #if __BYTE_ORDER == __BIG_ENDIAN
     unsigned int negative : 1;
-    unsigned int other : 31;
-#endif /* Big endian.  */
+    unsigned int other : (8 * sizeof(T) - 1);
+#endif 
 #if __BYTE_ORDER == __LITTLE_ENDIAN
-    unsigned int other : 31;
+    unsigned int other : (8 * sizeof(T) - 1);
     unsigned int negative : 1;
-#endif /* Little endian.  */
+#endif 
   } field;
 };
 
@@ -97,12 +97,12 @@ union TEMPLATE(abs, T) {
   struct {
 #if __BYTE_ORDER == __BIG_ENDIAN
     unsigned int negative : 1;
-    unsigned long int other : 63;
-#endif /* Big endian.  */
+    unsigned long int other : (8 * sizeof(T) - 1);
+#endif 
 #if __BYTE_ORDER == __LITTLE_ENDIAN
-    unsigned long int other : 63;
+    unsigned long int other : (8 * sizeof(T) - 1);
     unsigned int negative : 1;
-#endif /* Little endian.  */
+#endif 
   } field;
 };
 
@@ -116,12 +116,12 @@ union TEMPLATE(abs, T) {
   struct {
 #if __BYTE_ORDER == __BIG_ENDIAN
     unsigned int negative : 1;
-    unsigned long int other : 63;
-#endif /* Big endian.  */
+    unsigned long int other : (8 * sizeof(T) - 1);
+#endif 
 #if __BYTE_ORDER == __LITTLE_ENDIAN
-    unsigned long int other : 63;
+    unsigned long int other : (8 * sizeof(T) - 1);
     unsigned int negative : 1;
-#endif /* Little endian.  */
+#endif 
   } field;
 };
 
@@ -136,10 +136,9 @@ union TEMPLATE(abs, T) {
 #if __BYTE_ORDER == __BIG_ENDIAN
     unsigned int negative : 1;
     unsigned int exponent : 11;
-    /* Together these comprise the mantissa.  */
     unsigned int mantissa0 : 20;
     unsigned int mantissa1 : 32;
-#endif /* Big endian.  */
+#endif
 #if __BYTE_ORDER == __LITTLE_ENDIAN
 #if __FLOAT_WORD_ORDER == __BIG_ENDIAN
     unsigned int mantissa0 : 20;
@@ -147,13 +146,12 @@ union TEMPLATE(abs, T) {
     unsigned int negative : 1;
     unsigned int mantissa1 : 32;
 #else
-    /* Together these comprise the mantissa.  */
     unsigned int mantissa1 : 32;
     unsigned int mantissa0 : 20;
     unsigned int exponent : 11;
     unsigned int negative : 1;
 #endif
-#endif /* Little endian.  */
+#endif 
   } field;
 };
 
