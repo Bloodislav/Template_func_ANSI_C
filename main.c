@@ -34,7 +34,7 @@ int main() {
   printf("\n unsigned \n");
   printf("num(%%u): %u\n", num_3);
   printf("num(%%s): %s\n", str_3);
-  
+
   uint32 num_4 = 100000000;
   char str_4[40];
 
@@ -42,7 +42,7 @@ int main() {
   printf("\n unsigned long \n");
   printf("num(%%lu): %lu\n", num_4);
   printf("num(%%s) : %s\n", str_4);
-  
+
   uint64 num_5 = 100000000;
   char str_5[40];
 
@@ -50,7 +50,7 @@ int main() {
   printf("\n unsigned long long \n");
   printf("num(%%lu): %llu\n", num_5);
   printf("num(%%s) : %s\n", str_5);
-  
+
   double num_6 = -10.99;
   char str_6[40];
 
@@ -66,7 +66,6 @@ int main() {
   printf("\n long double \n");
   printf("num(%%Lf): %Lf\n", num_7);
   printf("num(%%s) : %s\n", str_7);
-
 
   return 0;
 }
