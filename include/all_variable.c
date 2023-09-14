@@ -21,24 +21,6 @@
 #ifdef T
 #undef T
 #endif
-#define T unsigned
-#include "num_to_str_template.c"
-
-#ifdef T
-#undef T
-#endif
-#define T uint32
-#include "num_to_str_template.c"
-
-#ifdef T
-#undef T
-#endif
-#define T uint64
-#include "num_to_str_template.c"
-
-#ifdef T
-#undef T
-#endif
 #define T double
 #include "num_to_str_template.c"
 
@@ -46,4 +28,34 @@
 #undef T
 #endif
 #define T double128
+#include "num_to_str_template.c"
+
+#ifdef T
+#undef T
+#endif
+#ifdef SIGNED
+#undef SIGNED
+#endif
+
+#define T unsigned
+#include "num_to_str_template.c"
+
+#ifdef T
+#undef T
+#endif
+#ifdef SIGNED
+#undef SIGNED
+#endif
+
+#define T uint32
+#include "num_to_str_template.c"
+
+#ifdef T
+#undef T
+#endif
+#ifdef SIGNED
+#undef SIGNED
+#endif
+
+#define T uint64
 #include "num_to_str_template.c"

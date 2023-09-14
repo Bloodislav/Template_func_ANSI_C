@@ -3,14 +3,7 @@
 #include <string.h>
 
 #define typename(num) \
-  _Generic(num, double : 'd', long double : 'L', default : 'i')
-
-#define issigned(num)                \
-  _Generic(num, unsigned             \
-           : 'u', unsigned long      \
-           : 'u', unsigned long long \
-           : 'u', default            \
-           : 's')
+  _Generic(num, double : 'd', long double : 'd', default : 'i')
 
 #ifdef T
 
@@ -21,33 +14,12 @@ int TEMPLATE(num_to_str, T)(T num, char* dest, int prec) {
   long double rounded = 0, div = 0;
   size_t negative = 0;
 
-  // Checking for a negative integer
-  if (issigned(num) == 's' && typename(num) == 'i') {
-    union TEMPLATE(abs, T) arg_i = {0};
-    arg_i.data = num;
-
-    negative = arg_i.field.negative;
-    if (arg_i.field.negative != 0) num *= -1;
-  }
-
-  // Checking for a negative floating point number (double)
-  if (issigned(num) == 's' && typename(num) == 'd') {
-    union TEMPLATE(dabs, T) arg_d;
-    arg_d.data = num;
-    negative = arg_d.field.negative;
-    if (arg_d.field.negative != 0) num *= -1;
-  }
-
-  // Checking for a negative floating point number (long double)
-  else if (issigned(num) == 's' && typename(num) == 'L') {
-    union TEMPLATE(labs, T) arg_L;
-    arg_L.data = num;
-    negative = arg_L.field.negative;
-    if (arg_L.field.negative != 0) num *= -1;
-  }
-
+#ifdef SIGNED
+  negative = (num < 0);
+  if (negative) num *= -1;
+#endif
   // if num if double (long double)
-  if (typename(num) == 'd' || typename(num) == 'L') {
+  if (typename(num) == 'd') {
     div = modfl(num, &rounded);
     div *= powl(10.0, (double)prec);
     div = roundl(div) / powl(10.0, (double)prec);
